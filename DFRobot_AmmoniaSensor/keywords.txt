@@ -1,0 +1,21 @@
+#######################################
+# Syntax Coloring DFRobot_AmmoniaSensor
+#######################################
+
+#######################################
+
+DFRobot_AmmoniaSensor	KEYWORD1
+#######################################
+getAmmoniaconcentration (KEYWORD2)
+#######################################
+
+getTemp	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+ADDRESS_0	LITERAL1
+ADDRESS_1	LITERAL1
+ADDRESS_2	LITERAL1
+ADDRESS_3	LITERAL1
