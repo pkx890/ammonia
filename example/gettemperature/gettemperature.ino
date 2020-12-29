@@ -1,6 +1,6 @@
  /*!
   * @file  gettemperature.ino
-  * @brief Gets ammonia concentration
+  * @brief Gets the temperature of the module
   * @copyright   Copyright (c) 2020 DFRobot Co.Ltd (http://www.dfrobot.com)
   * @licence     The MIT License (MIT)
   * @author      KaixingPeng(kaixing.peng@dfrobot.com)
@@ -22,8 +22,8 @@ void setup(){
 }
 
 void loop() {
-  Serial.print("ammonia concentration is: ");
-  Serial.print(myAmmoniaSensor.getAmmoniaconcentration(10));
-  Serial.println(" ppm");
+  Serial.print("temperature is: ");
+  Serial.print(myAmmoniaSensor.getTemp());
+  Serial.println("℃");
   delay(1000);
 }

@@ -24,15 +24,27 @@ float DFRobot_AmmoniaSensor::getAveragenum(float bArray[], uint8_t iFilterLen){
     bTemp += bArray[i];
   }
   float Ammoniacon = bTemp / iFilterLen;
+  float tem=getTemp();
+  if((tem>=20)&&(tem<40))
+    Ammoniacon=Ammoniacon/(0.036*tem+0.28);
+  else if((tem>=-40)&&(tem<20))
+    Ammoniacon=Ammoniacon/(1.1-0.005*tem);
+  else
+    ;
   if(flag){
-    float tem=getTemp();
-    return (Ammoniacon - temperatureCompensation(tem) );
+    return (Ammoniacon - temperatureCompensation(tem));
   }
   return Ammoniacon;
 }
 
 float DFRobot_AmmoniaSensor::temperatureCompensation(float temp){
-  float Compensation=(2-0.1*temp);
+  float Compensation;
+  if((temp>=20)&&(temp<40))
+    Compensation=(2-10*temp);
+  else if((temp>=-40)&&(temp<20))
+    Compensation=(16.7-0.84*temp);
+  else
+    return 0.0;
   return Compensation;
 }
 
@@ -49,9 +61,15 @@ float DFRobot_AmmoniaSensor::getAmmoniaconcentration(uint8_t CollectNum)
     AmmoniaData[0] = ((((float)rxbuf[0]) + ((float)rxbuf[1] / 10.0) + ((float)rxbuf[2] / 100.0))/(_Key));
     if(i < CollectNum)
       i++;
-    return getAveragenum(AmmoniaData,i);
+    float data=getAveragenum(AmmoniaData,i);
+    if(data<0)
+      return 0;
+    else if((data>210)&&(data<300))
+      return 888;
+    else if(data>300)
+      return 999;
   }else {
-    return -1.0;
+    return 0.0;
   }
 }
 
