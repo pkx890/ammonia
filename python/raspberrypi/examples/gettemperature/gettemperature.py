@@ -31,5 +31,5 @@ AmmoniaSensor = DFRobot_AmmoniaSensor_IIC(IIC_MODE ,ADDRESS_3)
 while(1):
   ''' Smooth data collection £¬the collection range is 1-100 '''
   temp = AmmoniaSensor.getTemp();
-  print("Module temperature is:  %4.2f degree centigrade"%temp)
+  print("temperature is:  %4.2f degree centigrade"%temp)
   time.sleep(1)

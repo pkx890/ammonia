@@ -78,18 +78,27 @@ class DFRobot_AmmoniaSensor(object):
     self.flag=eSwitch
 
   def getAveragenum(self,bArray,iFilterLen):
-    i = 0
-    bTemp = 0
+    i = 0;
+    bTemp = 0;
     for i in range(0,iFilterLen):
       bTemp += bArray[i]
     Ammoniacon = bTemp / iFilterLen
-    if(self.flag):
-      tem=self.getTemp()
+    tem=self.getTemp()
+    if((tem>=20)and(tem<40)):
+      Ammoniacon=Ammoniacon/(0.036*tem+0.28)
+    elif((tem>=-40)and(tem<20)):
+      Ammoniacon=Ammoniacon/(1.1-0.005*tem)
+    if self.flag:
       return (Ammoniacon - self.temperatureCompensation(tem))
     return Ammoniacon
     
   def temperatureCompensation(self,temp):
-    Compensation=(2-0.1*temp)
+    if((temp>=20)and(temp<40)):
+      Compensation=(2-10*temp)
+    elif((temp>=-40)and(temp<20)):
+      Compensation=(16.7-0.84*temp)
+    else:
+      return 0.0
     return Compensation
     
   def getAmmoniaconcentration(self,collectnum):
@@ -103,9 +112,18 @@ class DFRobot_AmmoniaSensor(object):
       self.__AmmoniaData[0] = (float(rslt[0]) + float(rslt[1]) / 10.0 + float(rslt[2]) / 100.0)/self.__key
       if self.__count < collectnum:
         self.__count += 1
-      return self.getAveragenum(self.__AmmoniaData ,self.__count)
+      data=self.getAveragenum(self.__AmmoniaData ,self.__count)
+      print("%f\n",data)
+      if(data<0):
+        return 0
+      elif((data>210)and(data<300)):
+        return 888
+      elif(data>300):
+        return 999
+      else:
+        return data
     elif (collectnum > 100) or (collectnum <= 0):
-      return -1.0
+      return 0.0
 
 '''
   @brief An example of an IIC interface module

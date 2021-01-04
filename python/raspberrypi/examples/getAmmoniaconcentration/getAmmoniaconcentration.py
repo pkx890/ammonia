@@ -17,7 +17,7 @@ import math
 sys.path.append("../..")
 from DFRobot_AmmoniaSensor import *
 
-COLLECT_NUMBER   = 10              # collect number, the collection range is 1-100
+COLLECT_NUMBER   = 1              # collect number, the collection range is 1-100
 IIC_MODE         = 0x01            # default use IIC1
 '''
    # The first  parameter is to select iic0 or iic1

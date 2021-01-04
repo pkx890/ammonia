@@ -68,6 +68,8 @@ float DFRobot_AmmoniaSensor::getAmmoniaconcentration(uint8_t CollectNum)
       return 888;
     else if(data>300)
       return 999;
+    else 
+      return data;
   }else {
     return 0.0;
   }
